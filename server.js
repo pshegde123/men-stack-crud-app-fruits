@@ -9,7 +9,6 @@ const app = express();
 
 // Connect to MongoDB using the connection string in the .env file
 mongoose.connect(process.env.MONGODB_URI);
-
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
@@ -19,6 +18,10 @@ mongoose.connection.on("error", (err) => {
 mongoose.connection.on("disconnected", () => {
   console.log("Disconnected from MongoDB.");
 });
+
+// Import the Fruit model
+const Fruit = require("./models/fruit.js");
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
