@@ -27,6 +27,9 @@ app.get("/", async (req, res) => {
   res.render("index.ejs");
 });
 
+app.get("/fruits/new", (req,res)=>{
+    res.render("new.ejs");
+});
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
