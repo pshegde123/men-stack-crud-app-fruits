@@ -1,5 +1,4 @@
 <!-- index.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,12 +11,12 @@
     <% if (fruits && fruits.length > 0) { %>
       <ul>
         <% fruits.forEach(fruit => { %>
-          <li><%= fruit.name %> - <%= fruit.isReadyToEat ? "Ready to Eat" : "Not Ready to Eat" %></li>
+          <li><a href="/fruits/<%= fruit.id %>"><%= fruit.name %></a> - <%= fruit.isReadyToEat ? "Ready to Eat" : "Not Ready to Eat" %></li>
         <% }) %>
       </ul>
     <% } else { %>
       <p>No fruits available.</p>
     <% } %>
-    <a href="/fruits/new">Add New Fruit</a>    
+    <a href="/fruits/new">Add New Fruit</a>
   </body>
 </html>

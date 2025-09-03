@@ -43,9 +43,14 @@ app.post("/fruits", async (req, res) => {
 
 app.get("/fruits", async (req, res) => {
   const allFruits = await Fruit.find();
-  //console.log(allFruits); // log the fruits!
+  console.log(allFruits); // log the fruits!
   //res.send("Welcome to the index page!");
   res.render('index.ejs',{fruits: allFruits});
+});
+app.get("/fruits/:fruitid", async (req, res) => {
+    console.log(req.params.fruitid);
+    const foundFruit = await Fruit.findById(req.params.fruitid);
+    res.render("show.ejs", { fruit: foundFruit });
 });
 
 app.listen(process.env.PORT, () => {
