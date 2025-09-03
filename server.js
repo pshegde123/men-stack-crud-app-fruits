@@ -13,7 +13,12 @@ mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
-
+mongoose.connection.on("error", (err) => {
+    console.log("Error:", err);
+});
+mongoose.connection.on("disconnected", () => {
+  console.log("Disconnected from MongoDB.");
+});
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
