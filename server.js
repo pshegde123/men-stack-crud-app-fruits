@@ -4,6 +4,8 @@ const dotenv = require("dotenv"); // require package
 dotenv.config(); // Loads the environment variables from .env file
 const express = require('express');
 const mongoose = require("mongoose"); 
+const methodOverride = require("method-override");
+const morgan = require("morgan");
 const app = express();
 //const PORT = 3000;
 
@@ -21,7 +23,10 @@ mongoose.connection.on("disconnected", () => {
 
 // Import the Fruit model
 const Fruit = require("./models/fruit.js");
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));   
+app.use(methodOverride("_method"));
+app.use(morgan("dev"));
+app.use(express.static("public"));
 
 // GET /
 app.get("/", async (req, res) => {
@@ -51,6 +56,29 @@ app.get("/fruits/:fruitid", async (req, res) => {
     console.log(req.params.fruitid);
     const foundFruit = await Fruit.findById(req.params.fruitid);
     res.render("show.ejs", { fruit: foundFruit });
+});
+
+app.get('/fruits/:fruitId/edit', async(req,res)=>{
+    const fruitId = req.params.fruitId;
+    const foundFruit = await Fruit.findById(fruitId);
+    console.log(foundFruit);
+    res.render("edit.ejs", { fruit: foundFruit });
+});
+
+app.put('/fruits/:fruitId', async(req,res)=>{
+    console.log("inside put method...");
+  // Handle the 'isReadyToEat' checkbox data
+  if (req.body.isReadyToEat === "on") {
+    req.body.isReadyToEat = true;
+  } else {
+    req.body.isReadyToEat = false;
+  }
+  
+  // Update the fruit in the database
+  await Fruit.findByIdAndUpdate(req.params.fruitId, {name: req.body.name, isReadyToEat: req.body.isReadyToEat});
+
+  // Redirect to the fruit's show page to see the updates
+  res.redirect(`/fruits/${req.params.fruitId}`);
 });
 
 app.listen(process.env.PORT, () => {

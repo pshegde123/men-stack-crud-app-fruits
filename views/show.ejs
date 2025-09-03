@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css" />
     <title>Show <%= fruit.name %></title>
 </head>
 <body>
-  <h1><%= fruit.name %></h1>
-  <!-- Conditional rendering based on fruit's readiness -->
-  <% if (fruit.isReadyToEat) { %>
-    <p>This fruit is ready to eat!</p>
-  <% } else { %>
-    <p>This fruit is not ready to eat!</p>
-  <% } %>
-  <a href="/fruits/">Back to fruits</a>
+  <div class="fruit-details">
+    <h1><%= fruit.name %></h1>
+    <!-- Conditional rendering based on fruit's readiness -->
+    <% if (fruit.isReadyToEat) { %>
+      <p>This fruit is ready to eat!</p>
+    <% } else { %>
+      <p>This fruit is not ready to eat!</p>
+    <% } %>
+  </div>
+  <a  class="fruits-index-link" href="/fruits/">Back to fruits</a>
+  <a  class="fruits-index-link"  href="/fruits/<%= fruit._id %>/edit">Edit this fruit</a>
 </body>
 </html>
