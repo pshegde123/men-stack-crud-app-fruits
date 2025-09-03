@@ -32,13 +32,6 @@ app.get("/fruits/new", (req,res)=>{
 });
 // POST /fruits
 app.post("/fruits", async (req, res) => {
-    //console.log(req.body.isReadyToEat);
-    //console.log(req.body.name);
-//   if (req.body.isReadyToEat === "on") {
-//     req.body.isReadyToEat = true;
-//   } else {
-//     req.body.isReadyToEat = false;
-//   }
   req.body.isReadyToEat === "on" ? req.body.isReadyToEat = true :  req.body.isReadyToEat = false;
   try{
         await Fruit.create(req.body);
@@ -48,6 +41,12 @@ app.post("/fruits", async (req, res) => {
   res.redirect("/fruits/new");
 });
 
+app.get("/fruits", async (req, res) => {
+  const allFruits = await Fruit.find();
+  //console.log(allFruits); // log the fruits!
+  //res.send("Welcome to the index page!");
+  res.render('index.ejs',{fruits: allFruits});
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
