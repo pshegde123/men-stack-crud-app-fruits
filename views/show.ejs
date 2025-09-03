@@ -16,6 +16,9 @@
       <p>This fruit is not ready to eat!</p>
     <% } %>
   </div>
+  <form action="/fruits/<%=fruit._id%>?_method=DELETE" method="POST">
+        <button class="delete-button" type="submit">Delete <%= fruit.name %></button>
+    </form> 
   <a  class="fruits-index-link" href="/fruits/">Back to fruits</a>
   <a  class="fruits-index-link"  href="/fruits/<%= fruit._id %>/edit">Edit this fruit</a>
 </body>

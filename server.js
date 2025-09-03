@@ -66,20 +66,26 @@ app.get('/fruits/:fruitId/edit', async(req,res)=>{
 });
 
 app.put('/fruits/:fruitId', async(req,res)=>{
-    console.log("inside put method...");
+    console.log("inside put method...",req.body);
   // Handle the 'isReadyToEat' checkbox data
   if (req.body.isReadyToEat === "on") {
     req.body.isReadyToEat = true;
   } else {
     req.body.isReadyToEat = false;
   }
-  
+  console.log(req.body.name[0]);
+  console.log(req.body.isReadyToEat);
   // Update the fruit in the database
-  await Fruit.findByIdAndUpdate(req.params.fruitId, {name: req.body.name, isReadyToEat: req.body.isReadyToEat});
+  await Fruit.findByIdAndUpdate(req.params.fruitId, {name: req.body.name[0], isReadyToEat: req.body.isReadyToEat});
 
   // Redirect to the fruit's show page to see the updates
   res.redirect(`/fruits/${req.params.fruitId}`);
 });
+
+app.delete('/fruits/:fruitId', async (req, res) => {
+    await Fruit.findByIdAndDelete(req.params.fruitId)
+    res.redirect('/fruits')
+})
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
