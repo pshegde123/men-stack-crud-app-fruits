@@ -21,15 +21,34 @@ mongoose.connection.on("disconnected", () => {
 
 // Import the Fruit model
 const Fruit = require("./models/fruit.js");
+app.use(express.urlencoded({ extended: false }));
 
 // GET /
 app.get("/", async (req, res) => {
   res.render("index.ejs");
 });
-
 app.get("/fruits/new", (req,res)=>{
     res.render("new.ejs");
 });
+// POST /fruits
+app.post("/fruits", async (req, res) => {
+    //console.log(req.body.isReadyToEat);
+    //console.log(req.body.name);
+//   if (req.body.isReadyToEat === "on") {
+//     req.body.isReadyToEat = true;
+//   } else {
+//     req.body.isReadyToEat = false;
+//   }
+  req.body.isReadyToEat === "on" ? req.body.isReadyToEat = true :  req.body.isReadyToEat = false;
+  try{
+        await Fruit.create(req.body);
+  } catch (error) {
+      console.log("Error creating fruit:", error);
+  }
+  res.redirect("/fruits/new");
+});
+
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
