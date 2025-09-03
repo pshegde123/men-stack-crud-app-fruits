@@ -22,6 +22,11 @@ mongoose.connection.on("disconnected", () => {
 // Import the Fruit model
 const Fruit = require("./models/fruit.js");
 
+// GET /
+app.get("/", async (req, res) => {
+  res.render("index.ejs");
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
